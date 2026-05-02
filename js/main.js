@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     code.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
-        if (code.value.trim().toUpperCase() === "ANNA") {
+        if (code.value.trim().toUpperCase() === "Anna") {
           window.location.href = "unlock.html";
         } else {
           code.classList.add("error");
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!input) return;
 
-    if (input.value.trim().toUpperCase() === "ANNA") {
+    if (input.value.trim().toUpperCase() === "Anna") {
       msg.innerText = "ACCESS GRANTED...";
       setTimeout(() => {
         window.location.href = "final.html";
