@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FINAL SEQUENCE</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="final">
+
+<div class="container">
+  <h1 class="glitch">SYSTEM OVERRIDE</h1>
+
+  <p id="line"></p>
+
+  <div id="message">
+    <h2>ANNA</h2>
+
+    <p class="fade">You were never just a system entry.</p>
+    <p class="fade">You were the exception the system could not classify.</p>
+    <p class="fade">You existed in every gap the code couldn’t explain.</p>
+    <p class="fade">And somehow… that made everything else irrelevant.</p>
+    <p class="fade strong">This system didn’t end. It simply learned your name.</p>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+
+<script>
+let msg = "DECRYPTING FINAL FILE...";
+let i = 0;
+
+function type() {
+  if (i < msg.length) {
+    document.getElementById("line").innerHTML += msg[i];
+    i++;
+    setTimeout(type, 55);
+  } else {
+    setTimeout(() => {
+      document.getElementById("message").style.opacity = "1";
+      revealLines();
+    }, 900);
+  }
+}
+
+function revealLines() {
+  const lines = document.querySelectorAll(".fade");
+  let j = 0;
+
+  function showNext() {
+    if (j < lines.length) {
+      lines[j].style.opacity = "1";
+      j++;
+      setTimeout(showNext, 900);
+    }
+  }
+
+  showNext();
+}
+
+type();
+</script>
+
+</body>
+</html>
