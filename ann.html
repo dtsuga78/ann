@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANNA_PROTOCOL</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: monospace;
+  background: black;
+  color: #00ff00;
+  text-shadow: 0 0 5px #00ff00;
+}
+
+.container {
+  width: 90%;
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+  padding-top: 18vh;
+}
+
+/* HIDE SCREENS */
+.screen { display: none; }
+.active { display: block; }
+
+/* INPUT */
+input, button {
+  background: black;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  padding: 10px;
+  margin-top: 15px;
+  width: 80%;
+}
+
+button { cursor: pointer; }
+
+.error {
+  border-color: red;
+}
+
+/* GLITCH */
+.glitch {
+  animation: flicker 1.8s infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes flicker {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+/* FINAL TEXT */
+#line {
+  min-height: 40px;
+  margin-bottom: 25px;
+}
+
+#message {
+  opacity: 0;
+  transition: 2s ease;
+}
+
+.fade {
+  opacity: 0;
+  transition: 1.2s ease;
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.strong {
+  color: #00ff00;
+  text-shadow: 0 0 12px #00ff00;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- SCREEN 1 -->
+  <div id="screen1" class="screen active">
+    <p id="text"></p>
+    <input id="code" placeholder="ENTER ACCESS CODE..." />
+  </div>
+
+  <!-- SCREEN 2 -->
+  <div id="screen2" class="screen">
+    <h2>SECURITY NODE</h2>
+    <p>Enter identifier</p>
+
+    <input id="answer" placeholder="CODE..." />
+    <button onclick="check()">UNLOCK</button>
+    <p id="msg"></p>
+  </div>
+
+  <!-- SCREEN 3 -->
+  <div id="screen3" class="screen">
+    <h1 class="glitch">SYSTEM OVERRIDE</h1>
+    <p id="line"></p>
+
+    <div id="message">
+      <h2>ANNA</h2>
+
+      <p class="fade">You were never just a system entry.</p>
+      <p class="fade">You were the exception the system could not classify.</p>
+      <p class="fade">You existed in every gap the code couldn’t explain.</p>
+      <p class="fade">And somehow… that made everything else irrelevant.</p>
+      <p class="fade strong">This system didn’t end. It simply learned your name.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// -------- SCREEN SWITCH --------
+function showScreen(n) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById("screen" + n).classList.add("active");
+
+  if (n === 3) startFinal();
+}
+
+// -------- SCREEN 1 --------
+const text = document.getElementById("text");
+const code = document.getElementById("code");
+
+let msg = "SYSTEM BOOTING...\nUNKNOWN USER DETECTED\nENTER ACCESS CODE";
+let i = 0;
+
+function type() {
+  if (i < msg.length) {
+    text.innerHTML += msg[i] === "\n" ? "<br>" : msg[i];
+    i++;
+    setTimeout(type, 40);
+  }
+}
+type();
+
+code.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    if (code.value.trim().toLowerCase() === "anna") {
+      showScreen(2);
+    } else {
+      code.classList.add("error");
+      setTimeout(() => code.classList.remove("error"), 500);
+    }
+  }
+});
+
+// -------- SCREEN 2 --------
+function check() {
+  const input = document.getElementById("answer");
+  const msg = document.getElementById("msg");
+
+  if (input.value.trim().toLowerCase() === "anna") {
+    msg.innerText = "ACCESS GRANTED...";
+    setTimeout(() => showScreen(3), 800);
+  } else {
+    msg.innerText = "ACCESS DENIED";
+    input.classList.add("error");
+
+    setTimeout(() => {
+      input.classList.remove("error");
+      msg.innerText = "";
+    }, 800);
+  }
+}
+
+// -------- SCREEN 3 --------
+function startFinal() {
+  let text = "DECRYPTING FINAL FILE...";
+  let i = 0;
+
+  function typeFinal() {
+    if (i < text.length) {
+      document.getElementById("line").innerHTML += text[i];
+      i++;
+      setTimeout(typeFinal, 55);
+    } else {
+      setTimeout(() => {
+        document.getElementById("message").style.opacity = "1";
+        revealLines();
+      }, 900);
+    }
+  }
+
+  function revealLines() {
+    const lines = document.querySelectorAll(".fade");
+    let j = 0;
+
+    function showNext() {
+      if (j < lines.length) {
+        lines[j].style.opacity = "1";
+        j++;
+        setTimeout(showNext, 900);
+      }
+    }
+    showNext();
+  }
+
+  typeFinal();
+}
+</script>
+
+</body>
+</html>
